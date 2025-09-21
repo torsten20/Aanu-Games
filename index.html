@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Catch the letter</title>
+    <script>
+      function loadJavaScriptFile() {
+        // Create a new script element
+        var script = document.createElement('script');
+        // Set the type attribute to "text/javascript"
+        script.type = 'text/javascript';
+        // Set the src attribute to the path of the JavaScript file
+        script.src = 'game.js';
+        // Append the script element to the head of the document
+        document.head.appendChild(script);
+      }
+    </script>
+  </head>
+  <body>
+<!--
+    <button onclick="loadJavaScriptFile()">Start Game</button>
+    <button onclick="loadJavaScriptFile()">Settings</button>
+-->
+   <script src="game.js"></script>
+  </body>
+</html>
