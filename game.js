@@ -53,10 +53,8 @@ ballImage.onload = function () {
   ballReady = true;
 };
 
-//ballImage.src = "images/alphabet_tr.png";
 ballImage.src = "images/alphabet_tr_2.png";
 var bsfcImage=new Image();
-//bsfcImage.src='images/ball.png';
 bsfcImage.src='images/bubble_tr.png';
 //Dimensions of a single letter
 var letterw=25;
@@ -161,7 +159,7 @@ addEventListener("touchstart", function (e) {
   startY = touch.clientY;
 
   baskets.forEach(function(basket){
-   if(startX>=basket.x*zoom && startX<=basket.x*zoom+basketw*zoom && startY>=basket.y*zoom && startY<=basket.y*zoom+basketh*zoom){ //is the touch within the area of a basket?
+   if(startX>=basket.x*zoom && startX<=basket.x*zoom+basketw*zoom && startY>=(basket.y+basketh)*zoom && startY<=(basket.y+basketh)*zoom){ //is the touch within the area of a basket?
      baskets.forEach(function (obasket){
        obasket.active=0;
      });
@@ -175,8 +173,8 @@ addEventListener("touchstart", function (e) {
 
 addEventListener("touchmove", function (e) {
   const touch = e.changedTouches[0];
-  diffX = touch.clientX - startX;
-  diffY = touch.clientY - startY;
+  diffX = (touch.clientX - startX)*zoom;
+  diffY = (touch.clientY - startY)*zoom;
   startX = touch.clientX;
   startY = touch.clientY;
   etouch=1;
