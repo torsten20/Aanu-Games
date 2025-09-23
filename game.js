@@ -159,7 +159,7 @@ addEventListener("touchstart", function (e) {
   startY = touch.clientY;
 
   baskets.forEach(function(basket){
-   if(startX>=basket.x*zoom && startX<=basket.x*zoom+basketw*zoom && startY>=(basket.y+basketh)*zoom && startY<=(basket.y+basketh)*zoom){ //is the touch within the area of a basket?
+   if(startX>=basket.x*zoom && startX<=basket.x*zoom+basketw*zoom && startY>=basket.y*zoom && startY<=(basket.y+basketh)*zoom){ //is the touch within the area of a basket?
      baskets.forEach(function (obasket){
        obasket.active=0;
      });
