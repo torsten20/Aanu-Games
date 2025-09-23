@@ -24,8 +24,8 @@ if(docheight>docwidth*aratio){
   zoom=docheight/canvas.height;
 
 }
-
-document.firstElementChild.style.zoom = zoom-0.05;
+zoom=zoom-0.05;
+document.firstElementChild.style.zoom = zoom;
 
 // Background image
 var bgReady = false;
@@ -173,8 +173,8 @@ addEventListener("touchstart", function (e) {
 
 addEventListener("touchmove", function (e) {
   const touch = e.changedTouches[0];
-  diffX = (touch.clientX - startX)*zoom;
-  diffY = (touch.clientY - startY)*zoom;
+  diffX = touch.clientX - startX;
+  diffY = touch.clientY - startY;
   startX = touch.clientX;
   startY = touch.clientY;
   etouch=1;
