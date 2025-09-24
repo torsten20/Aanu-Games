@@ -266,18 +266,21 @@ var update = function (modifier) {
           }
         }
         if (49 in keysDown){
-          bgImage.src = "images/bg-1.png";
+          bgImage.src = "images/bg.png";
         }
         if (50 in keysDown){
-          bgImage.src = "images/bg-2.png";
+          bgImage.src = "images/bg-1.png";
         }
         if (51 in keysDown){
-          bgImage.src = "images/bg-3.png";
+          bgImage.src = "images/bg-2.png";
         }
         if (52 in keysDown){
-          bgImage.src = "images/bg-4.png";
+          bgImage.src = "images/bg-3.png";
         }
         if (53 in keysDown){
+          bgImage.src = "images/bg-4.png";
+        }
+        if (54 in keysDown){
           bgImage.src = "images/bg-5.png";
         }
 
