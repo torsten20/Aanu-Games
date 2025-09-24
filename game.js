@@ -290,8 +290,8 @@ var update = function (modifier) {
       if(basket.active==1){ //if basket is active (was touched) move it 
         //basket.x=basket.x+diffX/zoom;
         //basket.y=basket.y+diffY/zoom;
-        basket.x=startX/zoom+basketw/2.;
-        basket.y=startY/zoom+basketh/2.;
+        basket.x=startX/zoom-basketw/2.;
+        basket.y=startY/zoom-basketh/2.;
       }
       
     }
