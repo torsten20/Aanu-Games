@@ -265,6 +265,21 @@ var update = function (modifier) {
             basket.x += basket.speed * modifier;
           }
         }
+        if (49 in keysDown){
+          bgImage.src = "images/bg-1.png";
+        }
+        if (50 in keysDown){
+          bgImage.src = "images/bg-2.png";
+        }
+        if (51 in keysDown){
+          bgImage.src = "images/bg-3.png";
+        }
+        if (52 in keysDown){
+          bgImage.src = "images/bg-4.png";
+        }
+        if (53 in keysDown){
+          bgImage.src = "images/bg-5.png";
+        }
 
         
       } //if basket active
