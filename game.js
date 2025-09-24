@@ -24,6 +24,7 @@ if(docheight>docwidth*aratio){
   zoom=docheight/canvas.height;
 
 }
+
 zoom=zoom-0.05;
 document.firstElementChild.style.zoom = zoom;
 
@@ -269,8 +270,10 @@ var update = function (modifier) {
       } //if basket active
     } else {//if touch is used
       if(basket.active==1){ //if basket is active (was touched) move it 
-        basket.x=basket.x+diffX/zoom;
-        basket.y=basket.y+diffY/zoom;
+        //basket.x=basket.x+diffX/zoom;
+        //basket.y=basket.y+diffY/zoom;
+        basket.x=startX;
+        basket.y=startY;
       }
       
     }
