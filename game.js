@@ -394,7 +394,7 @@ var update = function (modifier) {
 // Draw everything
 var render = function () {
   if (bgReady) {
-    ctx.drawImage(bgImage, 0, 0);
+    ctx.drawImage(bgImage, 0, 0, bgImage.width, bgImage.height,0,0,canvas.width,canvas.height);
   }
 
   baskets.forEach((basket,index) => {
