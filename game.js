@@ -54,7 +54,6 @@ ballImage.onload = function () {
   ballReady = true;
 };
 
-//ballImage.src = "images/alphabet_tr_2.png";
 ballImage.src = "images/alphabet_tr_3.png";
 var bsfcImage=new Image();
 bsfcImage.src='images/bubble_tr.png';
@@ -84,7 +83,6 @@ var star =
   y:400
 }
 
-
 var ballsCaught = 0;
 var score=0;
 var miss=0;
@@ -106,7 +104,6 @@ addEventListener("keyup", function (e) {
   delete keysDown[e.keyCode];
   key=-1;
 }, false);
-
 
 
 //implement touch recognision
@@ -440,7 +437,27 @@ var main = function () {
     ctx.fillText("GAME OVER!", 150, 350);
     ctx.textAlign = "centre";
     ctx.fillText("Your score: "+score, 150, 420);
-    
+    ctx.font = "45px Helvetica";
+    ctx.fillStyle = "blue";
+    ctx.fillRect(145,540,330,60);
+    ctx.fillStyle = "white";
+    ctx.textAlign = "centre";
+    ctx.fillText("Start new game", 150, 550);
+
+    if(etouch==1){
+      if(startX>145*zoom && startX<475*zoom){
+        if(startY>540*zoom && startY<600*zoom){
+          ctx.fillStyle = "rgba(0, 0, 0, 0)";
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.beginPath();
+          menu(); 
+        }
+      }
+    }
+
+
+
+
     /*
     //get name for highscore ranking
     player = prompt("Please enter your name:");
