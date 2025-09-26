@@ -484,7 +484,7 @@ var item=0;
 var Nitems=5;
 var y=0;
 var menu = function () {
-
+/*
   y=150+70*item;
 
   ctx.font = "45px Helvetica";
@@ -559,8 +559,10 @@ var menu = function () {
      xoff=0;
      Nletter=22;
   }
-
-  if((key>=49 && key<=54) || mtap==1){
+*/
+   xoff=0;
+   Nletter=12;
+  //if((key>=49 && key<=54) || mtap==1){
     //var xloc=[]
     Nbaskets=5;
     var ran=0;
@@ -609,16 +611,15 @@ var menu = function () {
       }
     ]
 
-    console.log(balls[0].xloc)
     
     keysDown[49] = true;
     ctx.fillStyle = "rgba(0, 0, 0, 0)";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     main();
-  } else {
-    requestAnimationFrame(menu);
-  }
+  //} else {
+  //  requestAnimationFrame(menu);
+  //}
 }
 // Cross-browser support for requestAnimationFrame
 var w = window;
