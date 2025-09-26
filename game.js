@@ -154,6 +154,8 @@ var diffX=0;
 var diffY=0;
 var etouch=0;
 
+bgc=0;
+
 addEventListener("touchstart", function (e) {
   const touch = e.changedTouches[0];
   startX = touch.clientX;
@@ -167,6 +169,20 @@ addEventListener("touchstart", function (e) {
     basket.active=1;
    }
   });
+  //if tap in top third change background picture
+  if(startY<canvas.height/3.) {
+    bgc=bgc+1;
+    if(bgc>5){
+      bgc=0;
+    }
+    if(bgc==0){
+      bgImage.src = "images/bg.png";
+    } else {
+      bgImage.src = "images/bg-"+bgc+".png";
+
+    }
+     
+  }
 
   etouch=1;
   e.preventDefault();
