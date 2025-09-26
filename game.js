@@ -54,14 +54,13 @@ ballImage.onload = function () {
   ballReady = true;
 };
 
-ballImage.src = "images/alphabet_tr_2.png";
+//ballImage.src = "images/alphabet_tr_2.png";
+ballImage.src = "images/alphabet_tr_3.png";
 var bsfcImage=new Image();
 bsfcImage.src='images/bubble_tr.png';
 //Dimensions of a single letter
 var letterw=25;
 var letterh=31;
-//Number of letters
-var Nletter=12;
 
 var latLetw=25;
 var latLeth=17;
@@ -69,53 +68,14 @@ var latLeth=17;
 var basketw=60;
 var basketh=70;
 
+var Nbaskets=5;
 //store the x location of randomly picked letters
-var xloc=[]
-Nbaskets=5;
-for(i=0;i<Nbaskets;i++){
-  ran=Math.floor(Math.random()*(Nletter-1))*(letterw+1);
-  while(xloc.includes(ran)){
-    ran=Math.floor(Math.random()*(Nletter-1))*(letterw+1);
-  }
-  xloc[i]=ran;
-}
-// Game objects
-var baskets =[
-  {
-    speed: 256, // movement in pixels per second
-    active: 1,
-    x0: 30,
-    x: 30,
-    y:canvas.height-60,
-    y0:canvas.height-60,
-    xloc:xloc[0]
-  }
-]
+var xloc=[];
+var baskets=[];
 
-for(i=1;i<Nbaskets;i++)
-{
-  let newBasket=
-  {
-    speed:256,
-    active:0,
-    x:30+120*i,
-    x0:30+120*i,
-    y:canvas.height-60,
-    y0:canvas.height-60,
-    xloc:xloc[i]
-  }
-  baskets.push(newBasket);
-}
+var balls=[];
 
-
-let balls=[
-  {
-    speed:ballspeed,
-    active:1,
-    hit:1,
-    xloc:xloc[Math.round(Math.random()*5)]
-  }
-]
+var ranidx;
 
 var star =
 {
@@ -135,21 +95,24 @@ var tinterval=0
 
 // Handle keyboard controls
 var keysDown = {};
+var key=-1;
 
 addEventListener("keydown", function (e) {
   keysDown[e.keyCode] = true;
+  key=e.keyCode;
 }, false);
 
 addEventListener("keyup", function (e) {
   delete keysDown[e.keyCode];
+  key=-1;
 }, false);
 
 
 
 //implement touch recognision
 
-var startX;
-var startY;
+var startX=-1;
+var startY=-1;
 var diffX=0;
 var diffY=0;
 var etouch=0;
@@ -281,7 +244,7 @@ var update = function (modifier) {
             basket.x += basket.speed * modifier;
           }
         }
-        if (49 in keysDown){
+        /*if (49 in keysDown){
           bgImage.src = "images/bg.png";
         }
         if (50 in keysDown){
@@ -298,7 +261,7 @@ var update = function (modifier) {
         }
         if (54 in keysDown){
           bgImage.src = "images/bg-5.png";
-        }
+        }*/
 
         
       } //if basket active
@@ -386,6 +349,7 @@ var update = function (modifier) {
       c++;
     }
 
+    ranidx=Math.round(Math.random()*(Nbaskets-1));
     let newBall=
     {
       speed:ballspeed+(Math.random()-0.5)*5,
@@ -515,11 +479,147 @@ var main = function () {
   }
 };
 
+
+var item=0;
+var Nitems=5;
+var y=0;
+var menu = function () {
+
+  y=150+70*item;
+
+  ctx.font = "45px Helvetica";
+  ctx.fillStyle = "blue";
+  ctx.fillRect(150,110,400,60);
+  ctx.fillStyle = "white";
+  ctx.textAlign = "centre";
+  ctx.fillText("1 Vowels", 150, 150);
+  ctx.fillStyle = "blue";
+  ctx.fillRect(150,180,400,60);
+  ctx.fillStyle = "white";
+  ctx.textAlign = "centre";
+  ctx.fillText("2 Consonants 1", 150, 220);
+  ctx.fillStyle = "blue";
+  ctx.fillRect(150,250,400,60);
+  ctx.fillStyle = "white";
+  ctx.textAlign = "centre";
+  ctx.fillText("3 Consonants 2", 150, 290);
+  ctx.fillStyle = "blue";
+  ctx.fillRect(150,320,400,60);
+  ctx.fillStyle = "white";
+  ctx.textAlign = "centre";
+  ctx.fillText("4 Consonants 3", 150, 360);
+  ctx.fillStyle = "blue";
+  ctx.fillRect(150,390,400,60);
+  ctx.fillStyle = "white";
+  ctx.textAlign = "centre";
+  ctx.fillText("5 All letters", 150, 430);
+
+  if(startX>150 && startX<400){
+    //vowels
+    if(startY>110 && startY<170){
+      xoff=0;
+      Nletter=12;
+    }
+    //consonants 2
+    if(startY>180 && startY<240){
+      xoff=12;
+      Nletter=10;
+    }
+    //all letters
+    if(startY>390 && startY<450){
+      xoff=0;
+      Nletter=22;
+    }
+
+  }
+
+  if (key==49){
+    xoff=0;
+    Nletter=12;
+  }
+  if (key==50){
+     xoff=12;
+     Nletter=10;
+  }
+  if (key==51){
+     xoff=12;
+     Nletter=10;
+  }
+  if (key==52){
+     xoff=12;
+     Nletter=10;
+  }
+  if (key==53){
+     xoff=0;
+     Nletter=22;
+  }
+
+  if((key>=49 && key<=54) || etouch==1){
+    //var xloc=[]
+    Nbaskets=5;
+    var ran=0;
+    for(i=0;i<Nbaskets;i++){
+      ran=Math.floor(Math.random()*(Nletter-1))*(letterw+1);
+      while(xloc.includes(xoff*(letterw+1)+ran)){
+        ran=Math.floor(Math.random()*(Nletter-1))*(letterw+1);
+      }
+      xloc[i]=xoff*(letterw+1)+ran;
+    }
+    // Game objects
+    baskets =[
+      {
+        speed: 256, // movement in pixels per second
+        active: 1,
+        x0: 30,
+        x: 30,
+        y:canvas.height-60,
+        y0:canvas.height-60,
+        xloc:xloc[0]
+      }
+    ]
+
+    for(i=1;i<Nbaskets;i++)
+    {
+      let newBasket=
+      {
+        speed:256,
+        active:0,
+        x:30+120*i,
+        x0:30+120*i,
+        y:canvas.height-60,
+        y0:canvas.height-60,
+        xloc:xloc[i]
+      }
+      baskets.push(newBasket);
+    }
+
+    let balls=[
+      {
+        speed:ballspeed,
+        active:1,
+        hit:1,
+        xloc:xloc[0]
+        //xloc:xloc[Math.round(Math.random()*5)]
+      }
+    ]
+
+    console.log(balls[0].xloc)
+    
+    keysDown[49] = true;
+    ctx.fillStyle = "rgba(0, 0, 0, 0)";
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    main();
+  } else {
+    requestAnimationFrame(menu);
+  }
+}
 // Cross-browser support for requestAnimationFrame
 var w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
 
+
 // Let's play this game!
 var then = Date.now();
 reset();
-main();
+menu();
