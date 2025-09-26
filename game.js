@@ -111,8 +111,8 @@ addEventListener("keyup", function (e) {
 
 //implement touch recognision
 
-var startX=-1;
-var startY=-1;
+var startX;
+var startY;
 var diffX=0;
 var diffY=0;
 var etouch=0;
@@ -514,23 +514,25 @@ var menu = function () {
   ctx.textAlign = "centre";
   ctx.fillText("5 All letters", 150, 430);
 
-  if(startX>150*zoom && startX<400*zoom){
-    //vowels
-    if(startY>110*zoom && startY<170*zoom){
-      xoff=0;
-      Nletter=12;
-    }
-    //consonants 2
-    if(startY>180*zoom && startY<240*zoom){
-      xoff=12;
-      Nletter=10;
-    }
-    //all letters
-    if(startY>390*zoom && startY<450*zoom){
-      xoff=0;
-      Nletter=22;
-    }
+  if(etouch==1){
+    if(startX>150*zoom && startX<400*zoom){
+      //vowels
+      if(startY>110*zoom && startY<170*zoom){
+        xoff=0;
+        Nletter=12;
+      }
+      //consonants 2
+      if(startY>180*zoom && startY<240*zoom){
+        xoff=12;
+        Nletter=10;
+      }
+      //all letters
+      if(startY>390*zoom && startY<450*zoom){
+        xoff=0;
+        Nletter=22;
+      }
 
+    }
   }
 
   if (key==49){
