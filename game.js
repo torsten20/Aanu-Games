@@ -616,6 +616,7 @@ var menu = function () {
     ctx.fillStyle = "rgba(0, 0, 0, 0)";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
+    bgImage.src = "images/bg.png";
     main();
   } else {
     requestAnimationFrame(menu);
