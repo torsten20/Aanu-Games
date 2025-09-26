@@ -437,25 +437,26 @@ var main = function () {
     ctx.fillText("GAME OVER!", 150, 350);
     ctx.textAlign = "centre";
     ctx.fillText("Your score: "+score, 150, 420);
-    ctx.font = "45px Helvetica";
-    ctx.fillStyle = "blue";
-    ctx.fillRect(145,540,330,60);
-    ctx.fillStyle = "white";
-    ctx.textAlign = "centre";
-    ctx.fillText("Start new game", 150, 550);
+  
+    let restart = confirm("Start another game?");
+    if (restart) {
+    //reset everything
+      reset();
 
-    if(etouch==1){
-      if(startX>145*zoom && startX<475*zoom){
-        if(startY>540*zoom && startY<600*zoom){
-          ctx.fillStyle = "rgba(0, 0, 0, 0)";
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.beginPath();
-          menu(); 
-        }
-      }
+      ctx.fillStyle = "rgba(0, 0, 0, 0)";
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.beginPath();
+
+      keysDown = {};
+      key=-1;
+      score=0;
+      level=1;
+      miss=0;
+      then = Date.now();
+      balls=[];
+      menu(); 
+
     }
-
-
 
 
     /*
@@ -499,10 +500,10 @@ var main = function () {
 
 var item=0;
 var Nitems=5;
-var y=0;
 var menu = function () {
 
-  y=150+70*item;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.beginPath();
 
   ctx.font = "45px Helvetica";
   ctx.fillStyle = "blue";
@@ -617,14 +618,12 @@ var menu = function () {
       }
       baskets.push(newBasket);
     }
-
     let balls=[
       {
         speed:ballspeed,
         active:1,
         hit:1,
-        xloc:xloc[0]
-        //xloc:xloc[Math.round(Math.random()*5)]
+        xloc:xloc[Math.round(Math.random()*5)]
       }
     ]
 
@@ -638,7 +637,7 @@ var menu = function () {
   } else {
     requestAnimationFrame(menu);
   }
-}
+};
 // Cross-browser support for requestAnimationFrame
 var w = window;
 requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
