@@ -469,11 +469,13 @@ async function main() {
     var days=10000;
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // Convert days to milliseconds
     expires = "; expires=" + date.toUTCString();
-    if(highscore=="null"){
+    var hslist=[];
+    if(highscore==null){
       highscore=player+": "+score;
+      hsmax=1;
+      hslist[0]=highscore;
     } else {
       highscore=player+": "+score+"*"+highscore;
-      var hslist=[];
       //only store 10 highest scores
       var hs2d=new Array(10);
 
@@ -513,7 +515,6 @@ async function main() {
     for(var i=0;i< hsmax;i++) { 
       ctx.fillText(hslist[i], 150, 320+30*i);
     }
-
 
     await new Promise(r => setTimeout(r, 2000));
 
