@@ -505,55 +505,61 @@ var menu = function () {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
 
-  ctx.font = "45px Helvetica";
-  ctx.fillStyle = "blue";
-  ctx.fillRect(150,110,400,60);
-  ctx.fillStyle = "white";
+  ctx.font = "25px Helvetica";
+
+  var bubImg = new Image();
+  bubImg.src = "images/bubble_tr.png";
+ 
+  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,20,20,120,120);
+  ctx.fillStyle = "black";
   ctx.textAlign = "centre";
-  ctx.fillText("1 Vowels", 150, 150);
-  ctx.fillStyle = "blue";
-  ctx.fillRect(150,180,400,60);
-  ctx.fillStyle = "white";
+  ctx.fillText("1 Vowels", 25, 90);
+
+  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,100,50,210,210);
+  ctx.fillStyle = "black";
   ctx.textAlign = "centre";
-  ctx.fillText("2 Consonants 1", 150, 220);
-  ctx.fillStyle = "blue";
-  ctx.fillRect(150,250,400,60);
-  ctx.fillStyle = "white";
+  ctx.fillText("2 Consonants 1", 120, 160);
+
+  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,285,10,210,210);
+  ctx.fillStyle = "black";
   ctx.textAlign = "centre";
-  ctx.fillText("3 Consonants 2", 150, 290);
-  ctx.fillStyle = "blue";
-  ctx.fillRect(150,320,400,60);
-  ctx.fillStyle = "white";
+  ctx.fillText("3 Consonants 2", 305, 120);
+
+  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,300,200,210,210);
+  ctx.fillStyle = "black";
   ctx.textAlign = "centre";
-  ctx.fillText("4 Consonants 3", 150, 360);
-  ctx.fillStyle = "blue";
-  ctx.fillRect(150,390,400,60);
-  ctx.fillStyle = "white";
+  ctx.fillText("4 Consonants 3", 320, 310);
+
+  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,40,240,160,160);
+  ctx.fillStyle = "black";
   ctx.textAlign = "centre";
-  ctx.fillText("5 All letters", 150, 430);
+  ctx.fillText("5 All letters", 60, 330);
 
   mtap=0;
   if(etouch==1){
-    if(startX>150*zoom && startX<400*zoom){
+    if(startX>20*zoom && startX<140*zoom){
       //vowels
-      if(startY>110*zoom && startY<170*zoom){
+      if(startY>20*zoom && startY<140*zoom){
         xoff=0;
         Nletter=12;
         mtap=1;
       }
+    }
+    if(startX>100*zoom && startX<310*zoom){
       //consonants 2
-      if(startY>180*zoom && startY<240*zoom){
+      if(startY>50*zoom && startY<260*zoom){
         xoff=12;
         Nletter=10;
         mtap=1;
       }
+    }
+    if(startX>40*zoom && startX<200*zoom){
       //all letters
-      if(startY>390*zoom && startY<450*zoom){
+      if(startY>240*zoom && startY<400*zoom){
         xoff=0;
         Nletter=22;
         mtap=1;
       }
-
     }
   }
 
