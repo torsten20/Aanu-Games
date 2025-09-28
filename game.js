@@ -3,6 +3,7 @@ var canvas = document.createElement("canvas");
 var ctx = canvas.getContext("2d");
 document.body.appendChild(canvas);
 
+var name;
 score=0;
 level=1;
 ballspeed=11;
@@ -413,10 +414,28 @@ var render = function () {
   ctx.fillText("Time: "+Math.floor(time)+" s Score: " + score+" Balls missed: "+miss+" Level: "+level, 32, 32);
 };
 
+function getCookieValue(name) {
+
+ const cookies = document.cookie.split(';');
+
+  for (let cookie of cookies) {
+    const [cookieName, cookieValue] = cookie.trim().split('=');
+    
+    if (cookieName === name) {
+      return decodeURIComponent(cookieValue);
+    }
+  }
+  return null; // Cookie not found
+
+}
+
+
 // The main game loop
-var main = function () {
+//var main = function () {
+async function main() {
   var now = Date.now();
   var delta = now - then;
+  var highscore="";
 
   time+=delta/1000
   tinterval+=delta/1000
@@ -434,11 +453,71 @@ var main = function () {
     render();
     ctx.font = "45px Helvetica";
     ctx.textAlign = "centre";
-    ctx.fillText("GAME OVER!", 150, 350);
+    ctx.fillText("GAME OVER!", 150, 150);
     ctx.textAlign = "centre";
-    ctx.fillText("Your score: "+score, 150, 420);
+    ctx.fillText("Your score: "+score, 150, 220);
   
-    let restart = confirm("Start another game?");
+
+    //get name for highscore ranking
+    player = prompt("Please enter your name:");
+    
+    highscore=getCookieValue(name);
+    //set cookie for highscore list
+    let expires = "";
+    
+    const date = new Date();
+    var days=10000;
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // Convert days to milliseconds
+    expires = "; expires=" + date.toUTCString();
+    if(highscore=="null"){
+      highscore=player+": "+score;
+    } else {
+      highscore=player+": "+score+"*"+highscore;
+      var hslist=[];
+      //only store 10 highest scores
+      var hs2d=new Array(10);
+
+      for(var i=0;i<hs2d.length;i++) {
+        hs2d[i]=new Array(2);
+      }
+      hslist=highscore.split('*');
+      
+      if(hslist.length>10){
+        hsmax=10;
+      } else {
+        hsmax=hslist.length;
+      }
+
+      for(var i=0;i<hsmax;i++){
+        [n,s]=hslist[i].split(': ');
+        hs2d[i][0]=n;
+        hs2d[i][1]=s;
+      }
+      hs2d=hs2d.sort((a,b)=>b[1]-a[1]);
+      for(var i=0;i<hsmax;i++){
+        hslist[i]=hs2d[i][0]+': '+hs2d[i][1];
+      }
+      highscore=hslist.join('*');
+
+    }//else
+    //highscore=" "; 
+    document.cookie = name + "=" + encodeURIComponent(highscore) + expires + "; path=/";
+
+    ctx.font = "35px Helvetica";
+    ctx.fillText("Highscores", 150, 280);
+
+    ctx.font = "25px Helvetica";
+    ctx.textAlign = "centre";
+    //list max 10 high score entries
+    
+    for(var i=0;i< hsmax;i++) { 
+      ctx.fillText(hslist[i], 150, 320+30*i);
+    }
+
+
+    await new Promise(r => setTimeout(r, 2000));
+
+    let restart = confirm("Your score is "+score+". Start another game?");
     if (restart) {
     //reset everything
       reset();
@@ -459,41 +538,7 @@ var main = function () {
     }
 
 
-    /*
-    //get name for highscore ranking
-    player = prompt("Please enter your name:");
-    //if cookie already exists, get cookie with previous highscores and add new one
-    
-    name="player"
-    const cookieName = `${encodeURIComponent(name)}=`;
-    const cookie = document.cookie;
-    let value = null;
-    
-    const startIndex = cookie.indexOf(cookieName);
-    if (startIndex > -1) {
-      const endIndex = cookie.indexOf(';', startIndex);
-      if (endIndex == -1) {
-        endIndex = cookie.length;
-      }
-     //get the highscore list
-     value = decodeURIComponent(cookie.substring(startIndex + name.length, endIndex) );
-    }
-    
 
-    ctx.fillText("Highscore: "+value, 150, 500);
-
-    //set cookie to remember high scores
-    value=value+score+" "+player+";";
-    let cookieText=`${encodeURIComponent("player")}=${encodeURIComponent(value)}`;
-    
-    var date = new Date();
-    var days=10000;
-    date.setTime(date.getTime() + (days*24*60*60*1000));
-    
-    cookieText += `; expires=${date.toUTCString()}`;
-    
-    document.cookie=cookieText;
-    */
   }
 };
 
@@ -502,6 +547,8 @@ var item=0;
 var Nitems=5;
 var menu = function () {
 
+  var highscore;
+  var hslist=[];
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.beginPath();
 
@@ -514,26 +561,72 @@ var menu = function () {
   ctx.fillStyle = "black";
   ctx.textAlign = "centre";
   ctx.fillText("1 Vowels", 25, 90);
+  highscore=getCookieValue("vowel");
+  if(highscore !=null){
+    hslist=highscore.split('*');
+  } else{
+    hslist[0]=" ";
+  }
+  ctx.font = "10px Helvetica";
+  ctx.fillText(hslist[0], 30, 115);
+  ctx.font = "25px Helvetica";
 
   ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,100,50,210,210);
   ctx.fillStyle = "black";
   ctx.textAlign = "centre";
   ctx.fillText("2 Consonants 1", 120, 160);
+  highscore=getCookieValue("con1");
+  if(highscore !=null){
+    hslist=highscore.split('*');
+  } else{
+    hslist[0]=" ";
+  }
+  ctx.font = "15px Helvetica";
+  ctx.fillText(hslist[0], 130, 185);
+  ctx.font = "25px Helvetica";
 
   ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,285,10,210,210);
   ctx.fillStyle = "black";
   ctx.textAlign = "centre";
   ctx.fillText("3 Consonants 2", 305, 120);
+  highscore=getCookieValue("con2");
+  if(highscore !=null){
+    hslist=highscore.split('*');
+  } else{
+    hslist[0]=" ";
+  }
+  ctx.font = "15px Helvetica";
+  ctx.fillText(hslist[0], 315, 145);
+  ctx.font = "25px Helvetica";
 
   ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,300,200,210,210);
   ctx.fillStyle = "black";
   ctx.textAlign = "centre";
   ctx.fillText("4 Consonants 3", 320, 310);
+  highscore=getCookieValue("con3");
+  if(highscore !=null){
+    hslist=highscore.split('*');
+  } else{
+    hslist[0]=" ";
+  }
+  ctx.font = "15px Helvetica";
+  ctx.fillText(hslist[0], 325, 335);
+  ctx.font = "25px Helvetica";
+
 
   ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,40,240,160,160);
   ctx.fillStyle = "black";
   ctx.textAlign = "centre";
   ctx.fillText("5 All letters", 60, 330);
+  highscore=getCookieValue("all");
+  if(highscore !=null){
+    hslist=highscore.split('*');
+  } else{
+    hslist[0]=" ";
+  }
+  ctx.font = "15px Helvetica";
+  ctx.fillText(hslist[0], 65, 355);
+  ctx.font = "25px Helvetica";
 
   mtap=0;
   if(etouch==1){
@@ -543,6 +636,7 @@ var menu = function () {
         xoff=0;
         Nletter=12;
         mtap=1;
+        name="vowel";
       }
     }
     if(startX>100*zoom && startX<310*zoom){
@@ -551,6 +645,7 @@ var menu = function () {
         xoff=12;
         Nletter=10;
         mtap=1;
+        name="con1";
       }
     }
     if(startX>40*zoom && startX<200*zoom){
@@ -559,6 +654,7 @@ var menu = function () {
         xoff=0;
         Nletter=22;
         mtap=1;
+        name="all";
       }
     }
   }
@@ -566,22 +662,27 @@ var menu = function () {
   if (key==49){
     xoff=0;
     Nletter=12;
+    name="vowel";
   }
   if (key==50){
      xoff=12;
      Nletter=10;
+     name="con1";
   }
   if (key==51){
      xoff=12;
      Nletter=10;
+     name="con2";
   }
   if (key==52){
      xoff=12;
      Nletter=10;
+     name="con3";
   }
   if (key==53){
      xoff=0;
      Nletter=22;
+     name="all";
   }
 
    //xoff=0;
