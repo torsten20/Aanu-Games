@@ -6,7 +6,7 @@ document.body.appendChild(canvas);
 var name;
 score=0;
 level=1;
-ballspeed=11;
+ballspeed=13;
 go=0; //game not over
 
 docheight=document.documentElement.clientHeight
@@ -16,14 +16,13 @@ console.log(docheight,docwidth);
 
 aratio=4/3;
 
-canvas.width = 600;
-canvas.height = 800;
+canvas.width=600;
+canvas.height=800;
 
 if(docheight>docwidth*aratio){
   zoom=docwidth/canvas.width;
 } else {
   zoom=docheight/canvas.height;
-
 }
 
 zoom=zoom-0.05;
@@ -172,8 +171,6 @@ addEventListener("touchend", function (e) {
 },{passive:false});
 
 
-var test=0;
-
 // Reset the game when the player catches a ball
 var reset = function () {
   var success;
@@ -200,7 +197,6 @@ var reset = function () {
       }
       ball.y=-40;
       ball.speed=ballspeed+(Math.random()-0.5)*5;
-      //ball.speed=10+(Math.random()-0.5)*10;
       ball.hit=0;
       ranidx=Math.round(Math.random()*(Nbaskets-1));
       ball.xloc=xloc[ranidx];
@@ -242,31 +238,10 @@ var update = function (modifier) {
             basket.x += basket.speed * modifier;
           }
         }
-        /*if (49 in keysDown){
-          bgImage.src = "images/bg.png";
-        }
-        if (50 in keysDown){
-          bgImage.src = "images/bg-1.png";
-        }
-        if (51 in keysDown){
-          bgImage.src = "images/bg-2.png";
-        }
-        if (52 in keysDown){
-          bgImage.src = "images/bg-3.png";
-        }
-        if (53 in keysDown){
-          bgImage.src = "images/bg-4.png";
-        }
-        if (54 in keysDown){
-          bgImage.src = "images/bg-5.png";
-        }*/
-
-        
+       
       } //if basket active
     } else {//if touch is used
       if(basket.active==1){ //if basket is active (was touched) move it 
-        //basket.x=basket.x+diffX/zoom;
-        //basket.y=basket.y+diffY/zoom;
         basket.x=startX/zoom-basketw/2.;
         basket.y=startY/zoom-basketh/2.;
       }
@@ -502,7 +477,7 @@ async function main() {
       highscore=hslist.join('*');
 
     }//else
-    //highscore=" "; 
+    
     document.cookie = name + "=" + encodeURIComponent(highscore) + expires + "; path=/";
 
     ctx.font = "35px Helvetica";
@@ -521,18 +496,16 @@ async function main() {
     let restart = confirm("Your score is "+score+". Start another game?");
     if (restart) {
     //reset everything
-      reset();
 
-      ctx.fillStyle = "rgba(0, 0, 0, 0)";
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.beginPath();
+      //ctx.fillStyle = "rgba(0, 0, 0, 0)";
+      //ctx.clearRect(0, 0, canvas.width, canvas.height);
+      //ctx.beginPath();
 
       keysDown = {};
       key=-1;
       score=0;
       level=1;
       miss=0;
-      then = Date.now();
       balls=[];
       menu(); 
 
@@ -544,90 +517,44 @@ async function main() {
 };
 
 
-var item=0;
-var Nitems=5;
-var menu = function () {
-
-  var highscore;
-  var hslist=[];
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.beginPath();
-
-  ctx.font = "25px Helvetica";
-
+var bubMenu=function(bubx,buby,bubd,text,cookie){
+//draw bubbles for menu page 
   var bubImg = new Image();
   bubImg.src = "images/bubble_tr.png";
- 
-  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,20,20,120,120);
+  
+  ctx.font = "23px Helvetica";
+  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,bubx,buby,bubd,bubd);
   ctx.fillStyle = "black";
   ctx.textAlign = "centre";
-  ctx.fillText("1 Vowels", 25, 90);
-  highscore=getCookieValue("vowel");
+  ctx.fillText(text, bubx+0.1*bubd, buby+0.5*bubd);
+  highscore=getCookieValue(cookie);
   if(highscore !=null){
     hslist=highscore.split('*');
   } else{
     hslist[0]=" ";
   }
-  ctx.font = "10px Helvetica";
-  ctx.fillText(hslist[0], 30, 115);
-  ctx.font = "25px Helvetica";
+  fs=Math.floor(bubd/12.);
+  ctx.font = fs+"px Helvetica";
+  ctx.fillText(hslist[0], bubx+Math.floor(bubd/7.), buby+Math.floor(bubd/1.5));
+  ctx.font = "23px Helvetica";
+}
 
-  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,100,50,210,210);
-  ctx.fillStyle = "black";
-  ctx.textAlign = "centre";
-  ctx.fillText("2 Consonants 1", 120, 160);
-  highscore=getCookieValue("con1");
-  if(highscore !=null){
-    hslist=highscore.split('*');
-  } else{
-    hslist[0]=" ";
-  }
-  ctx.font = "15px Helvetica";
-  ctx.fillText(hslist[0], 130, 185);
-  ctx.font = "25px Helvetica";
-
-  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,285,10,210,210);
-  ctx.fillStyle = "black";
-  ctx.textAlign = "centre";
-  ctx.fillText("3 Consonants 2", 305, 120);
-  highscore=getCookieValue("con2");
-  if(highscore !=null){
-    hslist=highscore.split('*');
-  } else{
-    hslist[0]=" ";
-  }
-  ctx.font = "15px Helvetica";
-  ctx.fillText(hslist[0], 315, 145);
-  ctx.font = "25px Helvetica";
-
-  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,300,200,210,210);
-  ctx.fillStyle = "black";
-  ctx.textAlign = "centre";
-  ctx.fillText("4 Consonants 3", 320, 310);
-  highscore=getCookieValue("con3");
-  if(highscore !=null){
-    hslist=highscore.split('*');
-  } else{
-    hslist[0]=" ";
-  }
-  ctx.font = "15px Helvetica";
-  ctx.fillText(hslist[0], 325, 335);
-  ctx.font = "25px Helvetica";
-
-
-  ctx.drawImage(bubImg,0,0,bubImg.width,bubImg.height,40,240,160,160);
-  ctx.fillStyle = "black";
-  ctx.textAlign = "centre";
-  ctx.fillText("5 All letters", 60, 330);
-  highscore=getCookieValue("all");
-  if(highscore !=null){
-    hslist=highscore.split('*');
-  } else{
-    hslist[0]=" ";
-  }
-  ctx.font = "15px Helvetica";
-  ctx.fillText(hslist[0], 65, 355);
-  ctx.font = "25px Helvetica";
+var menu = function () {
+//Menu page
+  var highscore;
+  var hslist=[];
+    
+  var titleImg = new Image();
+  titleImg.src = "images/title.png";
+  ctx.drawImage(titleImg, 0, 0, titleImg.width, titleImg.height,0,0,canvas.width,canvas.height);
+  ctx.textBaseline="alphabetic";
+  
+  //bubx,buby,bubd,text,cookie
+  bubMenu(20,20,120,"1) Vowels","vowel");
+  bubMenu(100,50,210,"2) Consonants 1","con1");
+  bubMenu(285,10,210,"3) Consonants 2","con2");
+  bubMenu(300,200,210,"4) Consonants 3","con3");
+  bubMenu(40,240,160,"5) All letters","all");
 
   mtap=0;
   if(etouch==1){
@@ -686,10 +613,7 @@ var menu = function () {
      name="all";
   }
 
-   //xoff=0;
-   //Nletter=12;
   if((key>=49 && key<=54) || mtap==1){
-    //var xloc=[]
     Nbaskets=5;
     var ran=0;
     for(i=0;i<Nbaskets;i++){
@@ -741,6 +665,8 @@ var menu = function () {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.beginPath();
     bgImage.src = "images/bg.png";
+    time=0;
+    then = Date.now();
     main();
   } else {
     requestAnimationFrame(menu);
