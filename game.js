@@ -57,6 +57,10 @@ ballImage.onload = function () {
 ballImage.src = "images/alphabet_tr_3.png";
 var bsfcImage=new Image();
 bsfcImage.src='images/bubble_tr.png';
+
+//length & width of ball image
+balld=60;
+
 //Dimensions of a single letter
 var letterw=25;
 var letterh=31;
@@ -184,11 +188,12 @@ var reset = function () {
       success=0;
       c=0;
       while(success==0){ //as long as there is an overlap with one of the other balls
-        ball.x= 32 + (Math.random() * (canvas.width - 64)); //generate random position
+        ball.x= 5 + (Math.random() * (canvas.width - balld-5)); //generate random position
         x[index]=ball.x;
         success=1;
         for(i=0;i<balls.length;i++ ){
-          if( ball.x >= x[i]-50 && ball.x <= x[i]+50 && y[i]<400  && i!=index && c<20 ){ //if there is overlap with one of the other balls less than 400px down, set success to 0 and keep looping
+          //if( ball.x >= x[i]-50 && ball.x <= x[i]+50 && y[i]<400  && i!=index && c<20 ){ //if there is overlap with one of the other balls less than 400px down, set success to 0 and keep looping
+          if( ball.x >= x[i]-balld && ball.x <= x[i]+balld && y[i]<400  && i!=index && c<20 ){ //if there is overlap with one of the other balls less than 400px down, set success to 0 and keep looping
                                                                                          //stop trying after 20 attempts
             success=0;
           }
@@ -312,10 +317,12 @@ var update = function (modifier) {
     success=0;
     c=0;
     while(success==0){ //as long as there is an overlap with one of the other balls
-      nbx= 32 + (Math.random() * (canvas.width - 64)); //generate random position
+      //nbx= 32 + (Math.random() * (canvas.width - 64)); //generate random position
+      nbx= 5 + (Math.random() * (canvas.width - balld-5)); //generate random position
       success=1;
       for(i=0;i<balls.length;i++ ){
-        if( nbx >= x[i]-50 && nbx <= x[i]+50 && y[i]<400 && c<20 ){ //if there is overlap with one of the other balls set success to 0 and keep looping
+        //if( nbx >= x[i]-50 && nbx <= x[i]+50 && y[i]<400 && c<20 ){ //if there is overlap with one of the other balls set success to 0 and keep looping
+        if( nbx >= x[i]-balld && nbx <= x[i]+balld && y[i]<400 && c<20 ){ //if there is overlap with one of the other balls set success to 0 and keep looping
           success=0;
         }
       }
@@ -363,8 +370,9 @@ var render = function () {
 
   balls.forEach(function (ball) {
     if (ballReady) {
-      ctx.drawImage(bsfcImage, ball.x, ball.y, 60, 60);
-      ctx.drawImage(ballImage, ball.xloc,0,letterw,letterh,ball.x+(60-letterw)/2, ball.y+(60-letterh)/2,letterw,letterh);
+      //ctx.drawImage(bsfcImage, ball.x, ball.y, 60, 60);
+      ctx.drawImage(bsfcImage, ball.x, ball.y, balld, balld);
+      ctx.drawImage(ballImage, ball.xloc,0,letterw,letterh,ball.x+(balld-letterw)/2, ball.y+(balld-letterh)/2,letterw,letterh);
     }
   });
   T=0.5
