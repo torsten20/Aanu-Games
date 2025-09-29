@@ -527,6 +527,7 @@ async function main() {
 
 var bubMenu=function(bubx,buby,bubd,text,cookie){
 //draw bubbles for menu page 
+  var hslist=[];
   var bubImg = new Image();
   bubImg.src = "images/bubble_tr.png";
   
@@ -549,8 +550,6 @@ var bubMenu=function(bubx,buby,bubd,text,cookie){
 
 var menu = function () {
 //Menu page
-  var highscore;
-  var hslist=[];
     
   var titleImg = new Image();
   titleImg.src = "images/title.png";
